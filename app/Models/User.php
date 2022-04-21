@@ -34,4 +34,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function setPhone($phone) {
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        $this->phone = $phone;
+
+        return $this;
+    }
 }

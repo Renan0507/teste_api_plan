@@ -12,9 +12,9 @@ class UpdateUserRequest extends FormRequest
         return [
             'name'      =>  ['required', 'min:2', 'string'],
             'email'     =>  ['required', 'email', Rule::unique('users')->ignore($this->route('id'))],
-            'password'  =>  ['required', 'min:3'],
-            'phone'     =>  ['nullable', 'digits:11'],
-            'image'     =>  ['nullable', 'file', 'mimes:png,jpg,jpeg']
+            'password'  =>  ['nullable', 'min:3'],
+            'phone'     =>  ['nullable', 'min: 11'],
+            'image'     =>  ['nullable']
         ];
     }
 }

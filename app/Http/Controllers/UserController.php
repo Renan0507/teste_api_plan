@@ -17,13 +17,14 @@ class UserController extends Controller
 
         $file = $request->file('image');
         $file_diretory = $file->store('images');
-        
+        $image_link = Storage::url($file_diretory);
+
         $user = new User();
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->password = Hash::make($validated['password']);
-        $user->phone = $validated['phone'];
-        $user->image = $file_diretory;
+        $user->setPhone($validated['phone']);
+        $user->image = $image_link;
 
         $user->save();
 
@@ -32,9 +33,9 @@ class UserController extends Controller
 
     public function read()
     {
-        $users = User::paginate(20);
+        $users = User::all();
 
-        if(empty($users['data'])) {
+        if($users->count() <= 0) {
             throw new NotFoundHttpException('Nenhum usuário encontrado');
         }
 
@@ -64,8 +65,9 @@ class UserController extends Controller
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
-        $user->phone = $validated['phone'];
+        if(!empty($validated['password'])) 
+            $user->password = Hash::make($validated['password']);
+        $user->setPhone($validated['phone']);
 
         if($request->hasFile('image')) {
 
@@ -92,6 +94,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return response()->json('Usuário '.$id.' deletado com sucesso', 200);
+        return response()->json($user, 200);
     }
 }
