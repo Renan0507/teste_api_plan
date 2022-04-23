@@ -13,7 +13,7 @@ class CreateUserRequest extends FormRequest
             'email'     =>  ['required', 'email', 'unique:users'],
             'password'  =>  ['required', 'min:3'],
             'phone'     =>  ['nullable', 'min:11'],
-            'image'     =>  ['required', 'file', 'mimes:png,jpg,jpeg']
+            'image'     =>  ['required', 'file']
         ];
     }
 }
