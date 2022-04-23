@@ -14,3 +14,6 @@
 
 2- Para criar as tabelas:
 > docker-compose up -d --build
+
+3- Depois de criado o banco e configurado o .env, crie as tabelas via migration:
+> php artisan migrate
